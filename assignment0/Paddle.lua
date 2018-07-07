@@ -26,12 +26,13 @@ Paddle = Class{}
     have their own x, y, width, and height values, thus serving as containers
     for data. In this sense, they're very similar to structs in C.
 ]]
-function Paddle:init(x, y, width, height)
+function Paddle:init(x, y, width, height, isBot)
     self.x = x
     self.y = y
     self.width = width
     self.height = height
     self.dy = 0
+    self.isBot = isBot
 end
 
 function Paddle:update(dt)

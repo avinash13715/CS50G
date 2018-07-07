@@ -90,8 +90,21 @@ function love.load()
 
     -- initialize our player paddles; make them global so that they can be
     -- detected by other functions and modules
-    player1 = Paddle(10, 30, 5, 20)
-    player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
+    numberOfBots = 1
+    
+    if numberOfBots == 0 then
+        botOne = false
+        botTwo = false
+    elseif numberOfBots == 1 then
+        botOne = true
+        botTwo = false
+    else
+        botOne = true
+        botTwo = true
+    end
+
+    player1 = Paddle(10, 30, 5, 20, botOne)
+    player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20, botTwo)
 
     -- place a ball in the middle of the screen
     ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
@@ -233,21 +246,41 @@ function love.update(dt)
     -- paddles can move no matter what state we're in
     --
     -- player 1
-    if love.keyboard.isDown('w') then
-        player1.dy = -PADDLE_SPEED
-    elseif love.keyboard.isDown('s') then
-        player1.dy = PADDLE_SPEED
+    if player1.isBot == true then
+        if player1.y > ball.y  then
+            player1.dy = -PADDLE_SPEED
+        elseif player1.y + player1.height/2 < ball.y then
+            player1.dy = PADDLE_SPEED
+        else
+            player1.dy = 0
+        end
     else
-        player1.dy = 0
+        if love.keyboard.isDown('w') then
+            player1.dy = -PADDLE_SPEED
+        elseif love.keyboard.isDown('s') then
+            player1.dy = PADDLE_SPEED
+        else
+            player1.dy = 0
+        end
     end
 
     -- player 2
+    if player2.isBot == true then
+        if player2.y > ball.y then
+            player2.dy = -PADDLE_SPEED
+        elseif player2.y + player2.height/2 < ball.y then
+            player2.dy = PADDLE_SPEED
+        else
+            player2.dy = 0
+        end
+    else
     if love.keyboard.isDown('up') then
         player2.dy = -PADDLE_SPEED
     elseif love.keyboard.isDown('down') then
         player2.dy = PADDLE_SPEED
     else
         player2.dy = 0
+    end
     end
 
     -- update our ball based on its DX and DY only if we're in play state;
