@@ -11,9 +11,9 @@
 ScoreState = Class{__includes = BaseState}
 
 -- intialize trophy sprites
-local TROPHY_BRONZE = love.graphics.newImage('goblet_bronze.png')
-local TROPHY_SILVER = love.graphics.newImage('goblet_silver.png')
-local TROPHY_GOLD   = love.graphics.newImage('goblet_gold.png')
+local TROPHY_BRONZE = love.graphics.newImage('goblet/goblet_bronze.png')
+local TROPHY_SILVER = love.graphics.newImage('goblet/goblet_silver.png')
+local TROPHY_GOLD   = love.graphics.newImage('goblet/goblet_gold.png')
 
 --[[
     When we enter the score state, we expect to receive the score
