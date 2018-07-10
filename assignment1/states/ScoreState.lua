@@ -10,12 +10,26 @@
 
 ScoreState = Class{__includes = BaseState}
 
+-- intialize trophy sprites
+local TROPHY_BRONZE = love.graphics.newImage('goblet_bronze.png')
+local TROPHY_SILVER = love.graphics.newImage('goblet_silver.png')
+local TROPHY_GOLD   = love.graphics.newImage('goblet_gold.png')
+
 --[[
     When we enter the score state, we expect to receive the score
     from the play state so we know what to render to the State.
 ]]
 function ScoreState:enter(params)
     self.score = params.score
+
+    -- set the correct trophy
+    if self.score < 5 then
+        trophy = TROPHY_BRONZE
+    elseif self.score < 10 then
+        trophy = TROPHY_SILVER
+    else
+        trophy = TROPHY_GOLD
+    end
 end
 
 function ScoreState:update(dt)
@@ -34,4 +48,7 @@ function ScoreState:render()
     love.graphics.printf('Score: ' .. tostring(self.score), 0, 100, VIRTUAL_WIDTH, 'center')
 
     love.graphics.printf('Press Enter to Play Again!', 0, 160, VIRTUAL_WIDTH, 'center')
+
+    -- render trophy 
+    love.graphics.draw(trophy, VIRTUAL_WIDTH/2 - trophy:getWidth()/2, 180)
 end
